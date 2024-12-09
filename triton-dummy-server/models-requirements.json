@@ -1,0 +1,50 @@
+{
+    "bengali_iitd": {
+        "cpu": 0.2499,
+        "ram": 0.13,
+        "gpu": 0.2499,
+        "vram": 0.18
+    },
+    "hindi_iitd": {
+        "cpu": 0.2499,
+        "ram": 0.13,
+        "gpu": 0.2499,
+        "vram": 0.18
+    },
+    "kashmiri_iitd": {
+        "cpu": 0.2499,
+        "ram": 0.13,
+        "gpu": 0.2499,
+        "vram": 0.18
+    },
+    "konkani_iitd": {
+        "cpu": 0.2499,
+        "ram": 0.13,
+        "gpu": 0.2499,
+        "vram": 0.18
+    },
+    "malayalam_iitd": {
+        "cpu": 0.2499,
+        "ram": 0.13,
+        "gpu": 0.2499,
+        "vram": 0.18
+    },
+    "marathi_iitd": {
+        "cpu": 0.2499,
+        "ram": 0.13,
+        "gpu": 0.2499,
+        "vram": 0.18
+    },
+    "oriya_iitd": {
+        "cpu": 0.2499,
+        "ram": 0.13,
+        "gpu": 0.2499,
+        "vram": 0.18
+    },
+    "tamil_iitd": {
+        "cpu": 0.2499,
+        "ram": 0.13,
+        "gpu": 0.2499,
+        "vram": 0.18
+    }
+}

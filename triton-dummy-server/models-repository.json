@@ -1,0 +1,42 @@
+{
+    "bengali_iitd": {
+        "name": "bengali_iitd",
+        "version": "1",
+        "state": "UNAVAILABLE"
+    },
+    "hindi_iitd": {
+        "name": "hindi_iitd",
+        "version": "1",
+        "state": "UNAVAILABLE"
+    },
+    "kashmiri_iitd": {
+        "name": "kashmiri_iitd",
+        "version": "1",
+        "state": "UNAVAILABLE"
+    },
+    "konkani_iitd": {
+        "name": "konkani_iitd",
+        "version": "1",
+        "state": "UNAVAILABLE"
+    },
+    "malayalam_iitd": {
+        "name": "malayalam_iitd",
+        "version": "1",
+        "state": "UNAVAILABLE"
+    },
+    "marathi_iitd": {
+        "name": "marathi_iitd",
+        "version": "1",
+        "state": "UNAVAILABLE"
+    },
+    "oriya_iitd": {
+        "name": "oriya_iitd",
+        "version": "1",
+        "state": "UNAVAILABLE"
+    },
+    "tamil_iitd": {
+        "name": "tamil_iitd",
+        "version": "1",
+        "state": "UNAVAILABLE"
+    }
+}
