@@ -1,10 +1,10 @@
 from time import sleep
 from copy import deepcopy
 
-from src.constants import default_server_resources_consumption, empty_resources
-from src.enums import MODEL_STATES
-from src.TritonHttpClient import TritonHttpClient
-from src.utils import dict_values_gte, list_of_dicts_find, reversed_ordered_dedupe, validate_occupied_resoruces
+from src.triton_clients.constants import default_server_resources_consumption, empty_resources
+from src.triton_clients.enums import MODEL_STATES
+from src.triton_clients.TritonHttpClient import TritonHttpClient
+from src.triton_clients.utils import dict_values_gte, list_of_dicts_find, reversed_ordered_dedupe, validate_occupied_resoruces
 
 
 class TritonLRUHttpClientSync:
@@ -17,7 +17,7 @@ class TritonLRUHttpClientSync:
     
     def _get_loaded_models(self):
         model_repository_index = self.triton_http_client.get_model_repository_index()
-        loaded_models = [model_dict['name'] for model_dict in model_repository_index if model_dict['state'] == MODEL_STATES.READY]
+        loaded_models = [model_dict['name'] for model_dict in model_repository_index if model_dict.get('state', "") == MODEL_STATES.READY]
         return loaded_models
 
     def _compute_occupied_resources(self):
@@ -27,7 +27,7 @@ class TritonLRUHttpClientSync:
 
         occupied_resources = deepcopy(empty_resources)
         for model_dict in model_repository_index:
-            if not model_dict['state'] == MODEL_STATES.READY:
+            if not model_dict.get('state', "") == MODEL_STATES.READY:
                 continue
             
             for resource_name in default_server_resources_consumption.keys():
@@ -52,7 +52,7 @@ class TritonLRUHttpClientSync:
         print("  TritonLRUHttpClientSync::_compute_available_resources ---> ok")
         return available_resources
     
-    def _unload_model_sync(self, model_id, max_poll_iterations=25, poll_interval=0.1):
+    def _unload_model_sync(self, model_id, max_poll_iterations=15, poll_interval=1.0):
         print("TritonLRUHttpClientSync::_unload_model_sync")
 
         self.triton_http_client.unload_model(model_id)
@@ -67,6 +67,7 @@ class TritonLRUHttpClientSync:
             
             print(f"    model is still loaded")
             sleep(poll_interval)
+            current_poll_iteration += 1
         
         print(f"  TritonLRUHttpClientSync::_unload_model_sync ---X model has not unloaded after {max_poll_iterations} of {poll_interval}s")
         return False
@@ -102,7 +103,7 @@ class TritonLRUHttpClientSync:
         
         print(f"  TritonLRUHttpClientSync::_check_model_state ---> model '{model_id}' is loaded")
         
-        return model_dict['state'] == target_model_state
+        return model_dict.get('state', "") == target_model_state
     
     def _check_and_load_model(self, model_id):
         print(f"TritonLRUHttpClientSync::_check_and_load_model")
@@ -133,20 +134,15 @@ class TritonLRUHttpClientSync:
         print("")
         return available_models
     
-    def infer(self, model_id):
-        print(f"TritonLRUHttpClientSync::infer")
-        print(f"  TritonLRUHttpClientSync::infer ---> model_id = {model_id}")
+    def pre_infer(self, model_id):
+        print(f"TritonLRUHttpClientSync::pre_infer")
+        print(f"  TritonLRUHttpClientSync::pre_infer ---> model_id = {model_id}")
 
-        print(f"  TritonLRUHttpClientSync::infer ---> _check_and_load_model")
+        print(f"  TritonLRUHttpClientSync::pre_infer ---> _check_and_load_model")
         self._check_and_load_model(model_id)
 
         self.lru_model_ids.append(model_id)
         self.lru_model_ids = reversed_ordered_dedupe(self.lru_model_ids)
-        print(f"  TritonLRUHttpClientSync::infer ---> update lru_model ids ok")
-        
-        print(f"  TritonLRUHttpClientSync::infer ---> triton_http_client.infer")
-        inference_result = self.triton_http_client.infer(model_id)
+        print(f"  TritonLRUHttpClientSync::pre_infer ---> update lru_model ids ok")
 
-        print(f"  TritonLRUHttpClientSync::infer ---> ok")
-        print("")
-        return inference_result
+        print(f"  TritonLRUHttpClientSync::pre_infer ---> ok")
