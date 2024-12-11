@@ -36,7 +36,7 @@ def infer_model(model_name):
     triton_http_response = triton_requests_session.post(
         triton_http_request_url, data=triton_http_request_data, headers=triton_http_request_headers
     )
-    
+
     # NOTE we here exclude all "hop-by-hop headers" defined by RFC 2616 section 13.5.1
     # ref. https://www.rfc-editor.org/rfc/rfc2616#section-13.5.1
     flask_response_excluded_headers = ['content-encoding', 'content-length', 'transfer-encoding', 'connection']
