@@ -1,11 +1,9 @@
-version: '3.8'
-
 services:
-  tritonserver-wrapper:
-    image: tritonserver-wrapper
-    container_name: tritonserver-wrapper
+  tritonserver-lru-wrapper:
+    image: tritonserver-lru-wrapper
+    container_name: tritonserver-lru-wrapper
     network_mode: host
     environment:
       APP_MODE: "PRODUCTION"
-      TRITON_HTTP_URL: "http://lipikar.cse.iitd.ac.in:7000"
+      TRITON_HTTP_URL: "http://localhost:7000"
   
